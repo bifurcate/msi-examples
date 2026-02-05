@@ -10,9 +10,10 @@ def run(work_dir):
     manifold_volume = float(manifold.volume())
 
     with open(work_dir / "output.txt", "w") as f:
-        f.write(f"Hello from {manifold.name()}\n")
+        f.write(f"Manifold Identifier: {manifold_identifier}\n")
         f.write(f"Margulis number: {margulis_number}\n")
         f.write(f"Number of cusps: {number_cusps}\n")
+        f.write(f"Manifold Volume: {manifold_volume}\n")
     
     # Save data to JSON file
     data = {
