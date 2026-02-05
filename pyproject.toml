@@ -13,6 +13,7 @@ pandas = "*"
 snappy = "^3.3"
 snappy-15-knots = "^1.2.1"
 matplotlib = "*"
+plotly = "^6.5.2"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "*"

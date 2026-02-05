@@ -2,8 +2,7 @@ import argparse
 import json
 from pathlib import Path
 import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator
+import plotly.express as px
 
 parser = argparse.ArgumentParser(description="Collect data from generated manifold directories")
 
@@ -48,20 +47,27 @@ def main():
     # Print the combined dataframe
     print(df)
     
-    # Create scatterplot
-    plt.figure(figsize=(10, 6))
-    scatter = plt.scatter(df['manifold_volume'], df['margulis_number'], alpha=0.5, s=10, c=df['number_cusps'], cmap='viridis')
-    plt.xlabel('Manifold Volume')
-    plt.ylabel('Margulis Number')
-    plt.title('Margulis Number vs Manifold Volume')
-    cbar = plt.colorbar(scatter, label='Number of Cusps')
-    cbar.locator = MaxNLocator(integer=True)
-    cbar.update_ticks()
-    plt.grid(True, alpha=0.3)
+    # Create interactive scatterplot with Plotly
+    fig = px.scatter(
+        df,
+        x='manifold_volume',
+        y='margulis_number',
+        color='number_cusps',
+        hover_data={'manifold_identifier': True, 'manifold_volume': ':.4f', 'margulis_number': ':.4f', 'number_cusps': True},
+        color_continuous_scale='Viridis',
+        labels={
+            'manifold_volume': 'Manifold Volume',
+            'margulis_number': 'Margulis Number',
+            'number_cusps': 'Number of Cusps'
+        },
+        title='Margulis Number vs Manifold Volume'
+    )
     
-    # Save plot as SVG
-    plot_path = root_dir / 'scatterplot.svg'
-    plt.savefig(plot_path, format='svg')
+    fig.update_traces(marker=dict(size=5, opacity=0.7))
+    
+    # Save plot as HTML
+    plot_path = root_dir / 'scatterplot.html'
+    fig.write_html(str(plot_path))
     print(f"\nPlot saved to {plot_path}")
 
 if __name__ == "__main__":
