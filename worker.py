@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
 import os
 import argparse
 from pathlib import Path
 
-from func import run
+from execute import run
 
 CLAIM_FILE = ".claimed"
 DONE_FILE = ".done"
